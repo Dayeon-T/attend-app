@@ -5,6 +5,7 @@ import AuthView from './views/AuthView'
 import HomeView from './views/HomeView'
 import ClassDetailView from './views/ClassDetailView'
 import Logo from './Logo'
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   const [user, setUser] = useState(null)
@@ -69,6 +70,28 @@ export default function App() {
 
   return (
     <>
+      {/* 전역 토스트 */}
+      <Toaster
+        position="bottom-center"
+        toastOptions={{
+          // 기본(성공/정보 등)
+          duration: 3000,
+          style: { background: "#1794f6", color: "#fff", fontSize: "12px" },
+          success: { icon: null },
+
+          // error일 때만 별도 스타일 적용
+          error: {
+            duration: 4000,
+            icon: null, // X 아이콘 숨김
+            style: {
+              background: "rgba(220,38,38,0.90)", // red-600 /90
+              color: "#fff",
+            },
+            // 또는 className 사용 가능:
+            // className: "bg-red-600/90 text-white border border-red-400 shadow-lg",
+          },
+        }}
+      />
     
     <div className="min-h-screen w-full flex justify-center bg-[#171717]">
       

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { supabase } from "./lib/supabase"
+import { toast } from "react-hot-toast"
 
 export default function SignIn() {
 
@@ -10,17 +11,25 @@ export default function SignIn() {
     const [loading, setLoading] = useState(false)
 
     // 경고 후 입력값 비우기 헬퍼
-    const showAlertAndReset = (message) => {
-        alert(message)
-        setEmail("")
-        setPw("")
-        setName("")
-        setStudentNo("")
+    const showAlertAndReset = (message, type = "error") => {
+      type === "success" ? toast.success(message) : toast.error(message)
+      setEmail("")
+      setPw("")
+      setName("")
+      setStudentNo("")
     }
 
     const onSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
+
+        // 비밀번호 6자리 미만이면 경고 후 중단
+        if ((pw || "").length < 6) {
+          setLoading(false)
+          toast.error("비밀번호는 6자리 이상이어야 합니다.")
+          return
+        }
+
         // GitHub Pages(서브 경로)와 로컬 모두에서 올바른 리다이렉트를 위해 BASE_URL을 사용
         const redirectTo = new URL(import.meta.env.BASE_URL || '/', window.location.origin).toString()
 
@@ -33,7 +42,6 @@ export default function SignIn() {
         })
 
         if (error) {
-            // 사용자 이미 존재하는 경우를 친절한 메시지로 처리
             const msg = String(error.message || '').toLowerCase()
             setLoading(false)
             if (error.code === 'user_already_registered' || msg.includes('already registered') || msg.includes('email address is already registered')) {
@@ -45,10 +53,9 @@ export default function SignIn() {
         }
 
         const user = data.user
-        if(!user){
-            // 이메일 확인(Confirm email)이 켜져 있는 경우 user가 즉시 반환되지 않을 수 있음
+        if (!user) {
             setLoading(false)
-            showAlertAndReset("회원가입 요청이 접수되었습니다. 이메일에 전송된 확인 메일을 열어 인증을 완료해 주세요.")
+            showAlertAndReset("회원가입 요청이 접수되었습니다. 이메일에 전송된 확인 메일을 열어 인증을 완료해 주세요.", "success")
             return
         }  
 
@@ -58,7 +65,7 @@ export default function SignIn() {
 
         setLoading(false)
 
-        if(profileError){
+        if (profileError) {
             
             if (profileError.code === '23505') {
                 
@@ -70,7 +77,7 @@ export default function SignIn() {
                 showAlertAndReset(`프로필 생성 실패: ${profileError.message}`)
             }
         } else {
-            showAlertAndReset("회원가입 요청이 접수되었습니다. 이메일에 전송된 확인 메일을 열어 인증을 완료해 주세요.")
+            showAlertAndReset("회원가입 요청이 접수되었습니다. 이메일에 전송된 확인 메일을 열어 인증을 완료해 주세요.", "success")
         }}
 
 
@@ -106,7 +113,7 @@ export default function SignIn() {
             
             <input 
                 type="password"
-                placeholder="비밀번호"
+                placeholder="비밀번호(6자리이상)"
                 value={pw}
                 onChange={(e)=>setPw(e.target.value)}
                 required
