@@ -21,10 +21,15 @@ export default function SignIn() {
     const onSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
-        
+        // GitHub Pages(서브 경로)와 로컬 모두에서 올바른 리다이렉트를 위해 BASE_URL을 사용
+        const redirectTo = new URL(import.meta.env.BASE_URL || '/', window.location.origin).toString()
+
         const {data, error} = await supabase.auth.signUp({
             email,
             password: pw,
+            options: {
+                emailRedirectTo: redirectTo,
+            },
         })
 
         if (error) {
