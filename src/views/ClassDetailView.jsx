@@ -1,6 +1,6 @@
 import ClassJoinCode from "../ClassJoinCode";
 import AttendanceWithHomework from "../AttendanceWithHomework";
-// import MyAttendanceToday from "../components/MyAttendanceToday"; // 제거
+
 import MyAttendanceByDates from "../components/MyAttendanceByDates";
 
 export default function ClassDetailView({ selectedClass, isAdmin, user }) {
@@ -12,8 +12,8 @@ export default function ClassDetailView({ selectedClass, isAdmin, user }) {
           <h2 className="text-lg font-semibold">{selectedClass.title}</h2>
           <span className="text-sm text-gray-500">ID: {selectedClass.id}</span>
         </div>
-        {/* 내 오늘 출석/과제 상태 제거 */}
-        {/* 내 날짜별 출석/과제 히스토리 (관리자에게는 숨김) */}
+        {}
+        {}
         {!isAdmin && (
           <MyAttendanceByDates classId={selectedClass.id} user={user} />
         )}

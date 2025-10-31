@@ -29,7 +29,7 @@ export default function JoinClassForm({ onJoined }) {
       return alert("코드가 올바르지 않습니다.");
     }
 
-    // 3) 이미 등록되어 있는지 먼저 확인
+    
     const { data: already, error: aErr } = await supabase
       .from("enrollments")
       .select("id")

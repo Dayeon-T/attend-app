@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,20 +8,23 @@
   </head>
   <body>
     <script>
-      // Fallback: 만약 오래된 인증 메일 링크가 루트(`/`)로 도착하면
-      // GitHub Pages의 프로젝트 서브패스(`/attend-app/`)로 안전하게 리다이렉트합니다.
+      
+      
       (function () {
         try {
           var hash = window.location.hash || "";
           var hasToken = /(^#|&)access_token=/.test(hash);
-          var atProjectPath = window.location.pathname.startsWith("/attend-app/");
+          var atProjectPath =
+            window.location.pathname.startsWith("/attend-app/");
           var isGitHubPages = /\.github\.io$/.test(window.location.hostname);
           if (isGitHubPages && hasToken && !atProjectPath) {
-            var target = "/attend-app/" + (hash.startsWith("#") ? hash.substring(1) : hash);
+            var target =
+              "/attend-app/" +
+              (hash.startsWith("#") ? hash.substring(1) : hash);
             window.location.replace(target);
           }
         } catch (e) {
-          // noop
+          
         }
       })();
     </script>

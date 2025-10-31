@@ -8,10 +8,10 @@ import Logo from './Logo'
 
 export default function App() {
   const [user, setUser] = useState(null)
-  const [page, setPage] = useState('auth') // 'auth' | 'home' | 'class'
+  const [page, setPage] = useState('auth') 
   const [selectedClass, setSelectedClass] = useState(null)
-  const [authTab, setAuthTab] = useState('login') // 'login' | 'signup'
-  const [isAdmin, setIsAdmin] = useState(false) // 관리자 상태 추가
+  const [authTab, setAuthTab] = useState('login') 
+  const [isAdmin, setIsAdmin] = useState(false) 
 
   useEffect(() => {
     let mounted = true
@@ -82,17 +82,17 @@ export default function App() {
           onLogout={logout}
         />
 
-        {/* AUTH */}
+        {}
         {page === 'auth' && (
           <AuthView authTab={authTab} setAuthTab={setAuthTab} />
         )}
 
-        {/* HOME */}
+        {}
         {page === 'home' && user && (
           <HomeView isAdmin={isAdmin} onSelectClass={openClass} />
         )}
 
-        {/* CLASS DETAIL */}
+        {}
         {page === 'class' && user && selectedClass && (
           <ClassDetailView selectedClass={selectedClass} isAdmin={isAdmin} user={user} />
         )}

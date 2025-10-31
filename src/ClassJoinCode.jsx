@@ -1,6 +1,6 @@
-// src/components/ClassJoinCode.jsx
+
 import { useState } from "react";
-import { supabase } from "./lib/supabase"; // ⬅️ 컴포넌트 폴더 기준 경로 확인!
+import { supabase } from "./lib/supabase"; 
 
 const genCode = () => Math.random().toString(36).slice(2, 8).toUpperCase();
 
@@ -20,13 +20,13 @@ export default function ClassJoinCode({ classId, initCode, isAdmin = false }) {
 
     const newCode = genCode();
 
-    // 1) update 시도 (0행이어도 에러 안 나게)
+    
     const { data, error } = await supabase
       .from("classes")
       .update({ join_code: newCode })
       .eq("id", id)
       .select("id, join_code")
-      .maybeSingle(); // <= 0행이면 data=null, error=null
+      .maybeSingle(); 
 
     if (error) {
       setLoading(false);
@@ -34,7 +34,7 @@ export default function ClassJoinCode({ classId, initCode, isAdmin = false }) {
     }
 
     if (!data) {
-      // 2) 왜 0행인지 확인 (존재 X vs RLS)
+      
       const { data: exists, error: qErr } = await supabase
         .from("classes")
         .select("id")
@@ -48,7 +48,7 @@ export default function ClassJoinCode({ classId, initCode, isAdmin = false }) {
       return alert("업데이트 권한이 없습니다. (RLS/정책 확인 필요)");
     }
 
-    // 성공
+    
     setCode(data.join_code);
     setLoading(false);
   };

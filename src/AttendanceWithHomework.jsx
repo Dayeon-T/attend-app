@@ -1,4 +1,4 @@
-// src/components/AttendanceWithHomework.jsx
+
 import { useEffect, useState, forwardRef } from "react";
 import { supabase } from "./lib/supabase";
 import { todayKST } from "./utills/dateKTS";
@@ -11,21 +11,21 @@ export default function AttendanceWithHomework({ classId, isAdmin = false }) {
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(todayKST());
   const [opBusy, setOpBusy] = useState(false);
-  // const [calendarOpen, setCalendarOpen] = useState(false);  // 제거
+  
 
-  // KST 기준 YYYY-MM-DD 포맷터
+  
   const formatKST = (d) =>
     new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(d);
 
-  // "YYYY-MM-DD" -> Date
+  
   const parseYMD = (s) => {
     const [y, m, d] = s.split("-").map(Number);
-    return new Date(y, m - 1, d); // 로컬 기준
+    return new Date(y, m - 1, d); 
   };
 
   const load = async (targetDate) => {
     setLoading(true);
-    // 1) 세션 조회 (자동 생성하지 않음)
+    
     const { data: sess } = await supabase
       .from("sessions")
       .select("*")
@@ -37,14 +37,14 @@ export default function AttendanceWithHomework({ classId, isAdmin = false }) {
     const sid = session?.id ?? null;
     setSessionId(sid);
 
-    // 세션이 없으면 목록을 보여주지 않음 (요청사항: 이전 날짜면 없어야 함)
+    
     if (!sid) {
       setRows([]);
       setLoading(false);
       return;
     }
 
-    // 2) 수강생(해당 classId에 등록된 학생)만 조회
+    
     const { data: enrolls, error: enrollErr } = await supabase
       .from("enrollments")
       .select("student_id")
@@ -64,7 +64,7 @@ export default function AttendanceWithHomework({ classId, isAdmin = false }) {
       return;
     }
 
-    // 3) 수강생 프로필 + 세션 출석/과제 여부 표시
+    
     const { data: list } = await supabase
       .from("profiles")
       .select(`
@@ -89,7 +89,7 @@ export default function AttendanceWithHomework({ classId, isAdmin = false }) {
 
   useEffect(() => {
     load(selectedDate);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [classId, isAdmin, selectedDate]);
 
   const createSession = async () => {
@@ -111,14 +111,14 @@ export default function AttendanceWithHomework({ classId, isAdmin = false }) {
     setOpBusy(false);
   };
 
-  // 세션 삭제 (관련 출석/과제 기록 먼저 삭제 후 세션 삭제)
+  
   const deleteSession = async () => {
     if (!isAdmin || !sessionId) return;
     const ok = window.confirm(`${selectedDate} 수업을 삭제하시겠어요?\n해당 수업의 출석/과제 기록도 함께 삭제됩니다.`);
     if (!ok) return;
     try {
       setOpBusy(true);
-      // FK 제약을 피하려고 선 삭제
+      
       await supabase.from("attendance_presence").delete().eq("session_id", sessionId);
       await supabase.from("homework_presence").delete().eq("session_id", sessionId);
       const { error } = await supabase.from("sessions").delete().eq("id", sessionId);
@@ -138,7 +138,7 @@ export default function AttendanceWithHomework({ classId, isAdmin = false }) {
   };
 
   const toggle = async (table, studentId, goingTrue) => {
-    if (!isAdmin || !sessionId) return; // 관리자만 저장
+    if (!isAdmin || !sessionId) return; 
     if (goingTrue) {
       await supabase.from(table).insert([{ session_id: sessionId, student_id: studentId }]);
     } else {
@@ -160,11 +160,11 @@ export default function AttendanceWithHomework({ classId, isAdmin = false }) {
 
   return (
     <div className="space-y-4">
-      {/* 날짜 선택 UI (react-datepicker) */}
+      {}
       <div className="flex items-center justify-between gap-2">
         <label className="text-sm text-white">날짜</label>
 
-        {/* 커스텀 버튼 */}
+        {}
         {(() => {
           const DateButton = forwardRef(({ value, onClick }, ref) => (
             <button
@@ -224,7 +224,7 @@ export default function AttendanceWithHomework({ classId, isAdmin = false }) {
         </div>
       </div>
 
-      {/* 로딩 중 스켈레톤 */}
+      {}
       {loading ? (
         <ul className="space-y-2">
           {Array.from({ length: 6 }).map((_, i) => (

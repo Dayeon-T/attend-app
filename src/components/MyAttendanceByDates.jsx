@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "../lib/supabase";
 
-// List per-date attendance/homework status for the current user in a class
+
 export default function MyAttendanceByDates({ classId, user, limit = 60 }) {
   const [loading, setLoading] = useState(true);
-  const [rows, setRows] = useState([]); // [{id, date, present, homework}]
+  const [rows, setRows] = useState([]); 
   const userId = user?.id;
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function MyAttendanceByDates({ classId, user, limit = 60 }) {
       }
       setLoading(true);
 
-      // 1) sessions by class
+      
       const { data: sessions, error: sErr } = await supabase
         .from("sessions")
         .select("id,date")
@@ -40,7 +40,7 @@ export default function MyAttendanceByDates({ classId, user, limit = 60 }) {
         return;
       }
 
-      // 2) presence for this user across these sessions
+      
       const [attRes, hwRes] = await Promise.all([
         supabase
           .from("attendance_presence")
@@ -80,7 +80,7 @@ export default function MyAttendanceByDates({ classId, user, limit = 60 }) {
     <div className="space-y-2">
       <h3 className="text-md font-semibold">내 출석 히스토리</h3>
 
-      {/* 로딩 중 스켈레톤 */}
+      {}
       {loading ? (
         <ul className="divide-y divide-gray-700 rounded border border-gray-700">
           {Array.from({ length: 5 }).map((_, i) => (

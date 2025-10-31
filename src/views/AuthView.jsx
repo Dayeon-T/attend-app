@@ -4,7 +4,7 @@ import SignIn from "../SignIn";
 export default function AuthView({ authTab, setAuthTab }) {
   return (
     <section className="space-y-3">
-      {/* 탭 + 슬라이딩 인디케이터 */}
+      {}
       <div className="px-4">
         <div className="relative">
           <div className="flex gap-2">
@@ -26,10 +26,10 @@ export default function AuthView({ authTab, setAuthTab }) {
             </button>
           </div>
 
-          {/* 바닥 라인(얕은 회색) */}
+          {}
           <div className="absolute left-0 right-0 bottom-0 h-[1px] bg-gray-600/40" />
 
-          {/* 움직이는 인디케이터 바 */}
+          {}
           <div
             className={`absolute bottom-0 left-0 h-[2px] w-1/2 bg-primary transition-transform duration-300 ease-out ${
               authTab === "signup" ? "translate-x-full" : "translate-x-0"
@@ -38,7 +38,7 @@ export default function AuthView({ authTab, setAuthTab }) {
         </div>
       </div>
 
-      {/* 부드러운 전환 패널 */}
+      {}
       <div className="p-4 relative overflow-hidden ">
         <div
           className={`transition-all duration-300 ease-out ${

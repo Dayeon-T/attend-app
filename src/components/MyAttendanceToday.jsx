@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { todayKST } from "../utills/dateKTS";
 
-// Show current user's attendance/homework status for today's session of a class
+
 export default function MyAttendanceToday({ classId, user }) {
   const [loading, setLoading] = useState(true);
   const [session, setSession] = useState(null);
@@ -18,7 +18,7 @@ export default function MyAttendanceToday({ classId, user }) {
       }
       setLoading(true);
       const today = todayKST();
-      // find today's session for this class
+      
       const { data: sess } = await supabase
         .from("sessions")
         .select("*")

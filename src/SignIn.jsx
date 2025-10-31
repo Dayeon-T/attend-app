@@ -59,12 +59,12 @@ export default function SignIn() {
         setLoading(false)
 
         if(profileError){
-            // Postgres 에러 코드에 따른 친절한 메시지
+            
             if (profileError.code === '23505') {
-                // unique_violation (이미 프로필 존재)
+                
                 showAlertAndReset('이미 프로필이 존재합니다. 로그인해 주세요.')
             } else if (profileError.code === '23503') {
-                // foreign_key_violation (auth.users와 연계 문제 등)
+                
                 showAlertAndReset('프로필 생성 중 오류가 발생했습니다. 이메일 인증을 완료했는지 확인 후 다시 시도해 주세요.')
             } else {
                 showAlertAndReset(`프로필 생성 실패: ${profileError.message}`)
