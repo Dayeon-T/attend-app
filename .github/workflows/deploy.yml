@@ -16,6 +16,9 @@ concurrency:
 
 jobs:
   build:
+    # 환경 비밀(Environment secrets)을 사용하려면 환경을 명시해야 합니다.
+    # 스크린샷처럼 github-pages 환경에 비밀을 넣었다면, build 잡에도 동일 환경을 지정하세요.
+    environment: github-pages
     runs-on: ubuntu-latest
     env:
       # Actions Variables(권장) 또는 Secrets 중 하나에 설정하세요.
